@@ -1,0 +1,3 @@
+2025-02-16 10:18:25.056250+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "WIZARD" not found (this database is empty); SQL statement:
+select w1_0.id,w1_0.name,a1_0.owner_id,a1_0.id,a1_0.description,a1_0.image_url,a1_0.name from wizard w1_0 left join artifact a1_0 on w1_0.id=a1_0.owner_id where w1_0.id=? [42104-232]
