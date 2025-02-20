@@ -1,6 +1,5 @@
 package com.anis.hogwartsartifactsonline.system.exception;
 
-import com.anis.hogwartsartifactsonline.artifact.ArtifactNotFountException;
 import com.anis.hogwartsartifactsonline.system.Result;
 import com.anis.hogwartsartifactsonline.system.StatusCode;
 import org.springframework.http.HttpStatus;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
 
-    @ExceptionHandler(ArtifactNotFountException.class)
+    @ExceptionHandler( ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    Result handleArtifactNotFoundException(ArtifactNotFountException ex) {
+    Result handleObjectNotFoundException(Exception ex) {
         return new Result(false, StatusCode.NOT_FOUND, ex.getMessage());
 
     }

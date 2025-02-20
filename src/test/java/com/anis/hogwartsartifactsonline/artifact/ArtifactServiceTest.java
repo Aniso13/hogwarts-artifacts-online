@@ -1,5 +1,5 @@
 package com.anis.hogwartsartifactsonline.artifact;
-
+import com.anis.hogwartsartifactsonline.system.exception.ObjectNotFoundException;
 import com.anis.hogwartsartifactsonline.artifact.utils.IdWorker;
 import com.anis.hogwartsartifactsonline.wizard.Wizard;
 import org.junit.jupiter.api.AfterEach;
@@ -101,7 +101,7 @@ class ArtifactServiceTest {
 
         //Then
         assertThat(thrown)
-                .isInstanceOf(ArtifactNotFountException.class)
+                .isInstanceOf(ObjectNotFoundException.class)
                 .hasMessage("Could not find artifact with Id 1250808601744904192");
         verify(artifactRepository, times(1)).findById("1250808601744904192");
     }
@@ -171,7 +171,7 @@ class ArtifactServiceTest {
 
         given(artifactRepository.findById("1250808601744904191")).willReturn(Optional.empty());
 
-        assertThrows(ArtifactNotFountException.class, () -> {
+        assertThrows(ObjectNotFoundException.class, () -> {
             artifactService.update("1250808601744904191", update);
         });
         verify(artifactRepository, times(1)).findById("1250808601744904191");
@@ -198,7 +198,7 @@ class ArtifactServiceTest {
     @Test
     void testDeleteNotFound() {
         given(artifactRepository.findById("1250808601744904191")).willReturn(Optional.empty());
-        assertThrows(ArtifactNotFountException.class, () -> {
+        assertThrows(ObjectNotFoundException.class, () -> {
             artifactService.delete("1250808601744904191");
         });
 
