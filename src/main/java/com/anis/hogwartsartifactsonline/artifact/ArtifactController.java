@@ -5,6 +5,7 @@ import com.anis.hogwartsartifactsonline.artifact.converter.ArtifactToArtifactDto
 import com.anis.hogwartsartifactsonline.artifact.dto.ArtifactDto;
 import com.anis.hogwartsartifactsonline.system.Result;
 import com.anis.hogwartsartifactsonline.system.StatusCode;
+import com.anis.hogwartsartifactsonline.wizard.WizardService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -27,10 +28,13 @@ public class ArtifactController {
 
     private final ArtifactDtoToArtifactConverter artifactDtoToArtifactConverter;
 
-    public ArtifactController(ArtifactService artifactService, ArtifactToArtifactDtoConverter artifactToArtifactDtoConverter, ArtifactDtoToArtifactConverter artifactDtoToArtifactConverter) {
+    private final WizardService wizardService;
+
+    public ArtifactController(ArtifactService artifactService, ArtifactToArtifactDtoConverter artifactToArtifactDtoConverter, ArtifactDtoToArtifactConverter artifactDtoToArtifactConverter, WizardService wizardService) {
         this.artifactService = artifactService;
         this.artifactToArtifactDtoConverter = artifactToArtifactDtoConverter;
         this.artifactDtoToArtifactConverter = artifactDtoToArtifactConverter;
+        this.wizardService = wizardService;
     }
 
     @GetMapping ("/{artifactId}")
@@ -90,5 +94,4 @@ public class ArtifactController {
         this.artifactService.delete(artifactId);
         return new Result(true, StatusCode.SUCCESS, "Delete Success");
     }
-
 }
