@@ -2,6 +2,9 @@ package com.anis.hogwartsartifactsonline.system;
 
 import com.anis.hogwartsartifactsonline.artifact.Artifact;
 import com.anis.hogwartsartifactsonline.artifact.ArtifactRepository;
+import com.anis.hogwartsartifactsonline.hogwartsuser.HogwartsUser;
+import com.anis.hogwartsartifactsonline.hogwartsuser.UserRepository;
+import com.anis.hogwartsartifactsonline.hogwartsuser.UserService;
 import com.anis.hogwartsartifactsonline.wizard.Wizard;
 import com.anis.hogwartsartifactsonline.wizard.WizardRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -14,9 +17,12 @@ public class DBDataInitializer implements CommandLineRunner {
 
     private final WizardRepository weizardRepository;
 
-    public DBDataInitializer(ArtifactRepository artifactRepository, WizardRepository weizardRepository) {
+    private final UserService userService;
+
+    public DBDataInitializer(ArtifactRepository artifactRepository, WizardRepository weizardRepository, UserService userService) {
         this.artifactRepository = artifactRepository;
         this.weizardRepository = weizardRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -79,5 +85,29 @@ public class DBDataInitializer implements CommandLineRunner {
         weizardRepository.save(w3);
 
         artifactRepository.save(a6);
+
+        // Create some users.
+        HogwartsUser u1 = new HogwartsUser();
+        u1.setUsername("john");
+        u1.setPassword("123456");
+        u1.setEnabled(true);
+        u1.setRoles("admin user");
+        // Don't manually set the id for the user, let the database generate it.
+
+        HogwartsUser u2 = new HogwartsUser();
+        u2.setUsername("eric");
+        u2.setPassword("654321");
+        u2.setEnabled(true);
+        u2.setRoles("user");
+
+        HogwartsUser u3 = new HogwartsUser();
+        u3.setUsername("tom");
+        u3.setPassword("qwerty");
+        u3.setEnabled(false);
+        u3.setRoles("user");
+
+        this.userService.save(u1);
+        this.userService.save(u2);
+        this.userService.save(u3);
     }
 }
