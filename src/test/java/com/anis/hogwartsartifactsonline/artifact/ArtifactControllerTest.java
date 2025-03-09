@@ -35,7 +35,7 @@ import java.util.regex.Matcher;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false) // Turn off Spring Security
 class ArtifactControllerTest {
     @Autowired
     MockMvc mockMvc;
