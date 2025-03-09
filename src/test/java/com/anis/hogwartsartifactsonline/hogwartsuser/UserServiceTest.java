@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles(value = "dev")
@@ -32,6 +33,9 @@ class UserServiceTest {
     UserService userService;
 
     List<HogwartsUser> hogwartsUsers;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setUp() {
@@ -131,6 +135,8 @@ class UserServiceTest {
         newUser.setPassword("123456");
         newUser.setEnabled(true);
         newUser.setRoles("user");
+
+        given(this.passwordEncoder.encode(newUser.getPassword())).willReturn("Encoded Password");
 
         given(this.userRepository.save(newUser)).willReturn(newUser);
 
