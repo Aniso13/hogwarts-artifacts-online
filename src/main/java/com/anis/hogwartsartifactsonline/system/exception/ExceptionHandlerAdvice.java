@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
@@ -24,6 +25,13 @@ public class ExceptionHandlerAdvice {
     Result handleObjectNotFoundException(Exception ex) {
         return new Result(false, StatusCode.NOT_FOUND, ex.getMessage());
     }
+
+    @ExceptionHandler(InsufficientAuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    Result handleInsufficientAuthenticationException(InsufficientAuthenticationException ex) {
+        return new Result(false, StatusCode.UNAUTHORIZED, "Login credentials are missing.", ex.getMessage());
+    }
+
 
     /**
      * This handles invalid inputs.
