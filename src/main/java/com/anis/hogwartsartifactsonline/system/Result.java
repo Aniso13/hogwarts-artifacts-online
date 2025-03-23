@@ -14,7 +14,6 @@ public class Result {
 
     private Object data; // The response payload
 
-
     public Result() {
     }
 
